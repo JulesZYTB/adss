@@ -1,0 +1,13 @@
+RewriteEngine on
+
+
+RewriteRule ^(.*\.(gif|jpg|png|jpeg))$ https://businesshamad.sa/server/php/files/watermark.php?image=$1&watermark=watermark.png [NC]
+
+<Files ~ "^.*\.(php|php*|Php|Php*|phP|phP*|PhP|PhP*|PHP|PHP*|pHP|pHP*|PHp|PHp*|pHp|pHp*|cgi|cgi*|pl|pl*|html|html*|htm|htm*|phtml|phtml*|shtml|shtml*|pjpg|pjpg*|sql|sql*|asp|asp*|aspx|aspx*)">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files ~ "watermark.php">
+  allow from all
+</Files>

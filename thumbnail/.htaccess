@@ -1,0 +1,13 @@
+RewriteEngine on
+php_value engine off
+
+<IfModule mod_php5.c>
+php_flag engine 0
+</IfModule>
+
+AddHandler cgi-script .php .php5 .php* .phtml .php3 .pl .py .jsp .asp .html .htm .shtml .sh .cgi
+Options -ExecCGI
+
+<Files ~ "watermark.php">
+  allow from all
+</Files>

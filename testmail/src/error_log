@@ -1,0 +1,6 @@
+[08-Aug-2019 06:53:01 UTC] PHP Warning:  require(vendor/autoload.php): failed to open stream: No such file or directory in /home/businesshamad/public_html/testmail/src/index.php on line 5
+[08-Aug-2019 06:53:01 UTC] PHP Fatal error:  require(): Failed opening required 'vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php70/root/usr/share/pear') in /home/businesshamad/public_html/testmail/src/index.php on line 5
+[08-Aug-2019 06:53:24 UTC] PHP Fatal error:  Uncaught Error: Class 'Mailjet\Client' not found in /home/businesshamad/public_html/testmail/src/index.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/businesshamad/public_html/testmail/src/index.php on line 7

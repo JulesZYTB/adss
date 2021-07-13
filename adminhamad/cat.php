@@ -1,0 +1,185 @@
+<?php
+session_start();
+if(!isset($_SESSION['id_members'])){header("location:index.php");}
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ar" dir="rtl">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="author" content="Paweł 'kilab' Balicki - kilab.pl" />
+<title>إضافة قسم - لوحة التحكم</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/navi.css" media="screen" />
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(function(){
+  $(".box .h_title").not(this).next("ul").hide("normal");
+  $(".box .h_title").not(this).next("#home").show("normal");
+  $(".box").children(".h_title").click( function() { $(this).next("ul").slideToggle(); });
+});
+</script>
+
+</head>
+<body>
+<div class="wrap">
+  <div id="header">
+    
+        
+        <?php
+    include("template/header.php");
+    include('config_class.php');
+    $db = new db();
+    ?>
+        
+        <?php
+    if($group_num !== "1"){header("location:logout.php");}
+    ob_end_flush();
+    ?>
+    
+        
+        
+        <?php
+    include("template/menu.php");
+    ?>
+    
+        
+        
+    <div id="main">
+      <div class="full_w">
+        <?php 
+        	if(isset($_GET['edit']) && is_numeric($_GET['edit'])){
+        		$takh=$_GET['edit'];
+
+        		if(isset($_POST['subup'])){
+          		$name=$db -> fil($_POST['name']);
+          		if(empty($name)){
+          			echo "<div class='alert alert-error'>لا يمكن إدخال بيانات فارغة الرجاء إدخال إسم القسم</div>";
+          		}else {
+          			$tes=$db -> qex("SELECT id FROM cat WHERE title='$name'");
+          			$num2=$tes -> num_rows;
+          			if($num2==0){
+	          			$up=$db -> qex("UPDATE cat SET title='$name' WHERE id='$takh'");
+	          			if($up){
+	          				echo "<div class='alert alert-success'>تم تحديث بيانات القسم بنجاح</div>";
+	          			}
+	          		}else {
+          			echo "<div class='alert alert-error'>خطأ هدا القسم موجود مسبقا !!!!</div>";
+	          		}
+          		}
+          	}
+
+
+        		$get=$db -> qex("SELECT * FROM cat WHERE id='$takh'");
+        		if($get->num_rows==0){
+        			header("lotakhion:index.php");
+        		}else {
+        			$rse=$get -> fetch_array();
+        		?>
+        			<form method="post">
+        				<table class="table table-hover">
+        					<tr>
+        						<td>إسم القسم</td>
+        						<td>:</td>
+        						<td><input type="text" name="name" value="<?php echo $rse['title']; ?>"></td>
+        					</tr>
+        				</table>
+        				<input type="submit" value="تعديل" name="subup" class="btn btn-success">
+        			</form>
+        		<?php
+        		}
+        	}else {
+         ?>
+          <h3>إضافة قسم جديد</h3>
+          <?php 
+          	if(isset($_POST['subadd'])){
+          		$name=$db -> fil($_POST['name']);
+          		if(empty($name)){
+          			echo "<div class='alert alert-error'>لا يمكن إدخال بيانات فارغة الرجاء إدخال إسم القسم</div>";
+          		}else {
+          			$tes=$db -> qex("SELECT id FROM cat WHERE title='$name'");
+          			$num2=$tes -> num_rows;
+          			if($num2==0){
+	          			$add=$db -> qex("INSERT INTO cat(title) VALUES ('$name')");
+	          			if($add){
+	          				echo "<div class='alert alert-success'>تم إضافة القسم بنجاح</div>";
+	          			}
+	          		}else {
+          			echo "<div class='alert alert-error'>خطأ هدا القسم موجود مسبقا !!!!</div>";
+	          		}
+          		}
+          	}
+           ?>
+          	<form method="post">
+          		<table class="table table-hover">
+          			<tr>
+          				<td>إسم القسم</td>
+          				<td>:</td>
+          				<td><input type="text" name="name" placeholder="إسم القسم"></td>
+          			</tr>
+          		</table>
+          		<input type="submit" value="إضافة" name="subadd" class="btn btn-success">
+          	</form>
+          	<hr>
+          	<h3>المكاتب</h3>
+          	<?php 
+          		if(isset($_GET['del']) && is_numeric($_GET['del'])) {
+          			$id=$_GET['del'];
+          			$qdel=$db -> qex("DELETE FROM cat WHERE id='$id'");
+          			if($qdel) {
+          				echo "<div class='alert alert-success'>تم حدف القسم بنجاح</div>";
+          			}
+          		}
+          	 ?>
+          	<table class="table" id="table_id">
+          		<thead>
+      	<tr style="background: url(bg_box_head.jpg) repeat-x;">
+					
+          			<th>إسم القسم</th>
+          			<th>تعديل القسم</th>
+          			<th>حدف القسم</th>
+          		</tr>
+          		</thead>
+          		<?php 
+          			$qer=$db -> qex("SELECT * FROM cat");
+          			$num2=$qer -> num_rows;
+          			if($num2==0){
+          				echo "<div class='alert alert-error'>لا يوجد اي قسم مضاف حاليا !!!</div>";
+          			}else {
+          				while ($rs=$qer -> fetch_array()) {
+          					?>
+          					<tr>
+          						<td id="takh"><?php echo $rs['title']; ?></td>
+          						<td><a href="cat.php?edit=<?php echo $rs['id']; ?>" class="btn btn-primary">تعديل</a></td>
+          						<td><a href="cat.php?del=<?php echo $rs['id']; ?>" class="btn btn-danger delet">حدف</a></td>
+          					</tr>
+          					<?php
+          				}
+          			}
+          		 ?>
+          	</table>
+          	<?php } ?>
+           </div>
+        </div>
+        </center>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".delet").click(function(){
+			var takh = $(this).parent().prev().prev().text();
+			var conf = confirm("هل انت متأكد من حدف القسم "+ takh);
+			if(conf==true) {
+				return true;
+			}else {
+				return false;
+			}
+		})
+	})
+</script>
+
+
+        <?php
+
+    include("template/footer.php");
+    ?>
+
+</body>
+</html>
