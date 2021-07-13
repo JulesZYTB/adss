@@ -23,8 +23,8 @@ $keywords = $print_value[keywords];
 $namewebsiteen = $print_value[namewebsiteen];
 $description = nl2br($print_value[description]);
 
-$mailjetApiKey = '829396f430489effef4adadb99917ee5';
-$mailjetApiSecret = '0cb589497fd46af39b035c1ca9f4b576';
+$mailjetApiKey = 'API_KEY';
+$mailjetApiSecret = 'API_KEY';
 
 ?>
 
