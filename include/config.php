@@ -1,10 +1,10 @@
 <?php
  
 
-$db_server="localhost"; # اسم السيرفر المستضيف لقاعدة البيانات في الغالب يتم تركها كما هيا
-$db_name="tadawl_2018"; # اسم قاعدة البيانات
-$db_username="tadawl_2018use"; # اسم المستخدم لقاعدة البيانات
-$db_password="AmP4Z1KQjA7v"; # كلمة المرور لقاعدة البيانات
+$db_server="mysql-bloumegen.alwaysdata.net"; # اسم السيرفر المستضيف لقاعدة البيانات في الغالب يتم تركها كما هيا
+$db_name="bloumegen_ads"; # اسم قاعدة البيانات
+$db_username="bloumegen_ads"; # اسم المستخدم لقاعدة البيانات
+$db_password="jules.zap.9978!"; # كلمة المرور لقاعدة البيانات
 
 $cookie_name_username = "username";
 $cookie_name_password = "password";
